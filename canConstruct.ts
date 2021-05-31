@@ -61,16 +61,29 @@ console.log(canConstruct2('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',
 */
 
 function canConstruct3(target, wordBank) {
-        
+    let dp = Array(target.length + 1).fill(false);
+    dp[0] = true;
+    for(let i = 0; i < target.length; i++) {
+	if(dp[i]) {
+	    for(let word of wordBank) {
+		if(target.slice(i, i + word.length) == word) {
+		    dp[i + word.length] = true;
+		}
+	    }
+	}
+    }
+
+    //console.log(dp);
+    return dp[target.length];
 }
+
 
 console.log(canConstruct3("abcdef",
 			 ['ab', 'abc', 'cd', 'def', 'abcd'])); // true
-/*
-console.log(canConstruct2('skateboard',
+console.log(canConstruct3('skateboard',
 			 ['bo', 'rd', 'ate', 't', 'sk', 'boar'])) // false
-console.log(canConstruct2('enterapotentpot',
+console.log(canConstruct3('enterapotentpot',
 			 ['a', 'p', 'ent', 'enter', 'ot', 'o', 't'])) // true
-console.log(canConstruct2('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',
+console.log(canConstruct3('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',
 			 ['e', 'ee', 'eee', 'eeee', 'eeeeee', 'eeeeeee'])); // false
-*/
+
