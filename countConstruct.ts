@@ -48,14 +48,32 @@ function countConstruct2(target, wordBank, memo={}) {
 }
 
 
-console.log(countConstruct2("abcdef",
+function countConstruct3(target, wordBank) {
+    let dp = Array(target.length + 1).fill(0);
+    dp[0] = 1;
+
+    for(let i = 0; i < target.length; i++) {
+	if(dp[i]) {
+	    for(let w of wordBank) {
+		if(target.slice(i, i + w.length) === w) {
+		    dp[i + w.length] = dp[i + w.length] + dp[i];
+		}
+	    }
+	}
+    }
+
+    return dp[target.length];
+}
+
+console.log(countConstruct3("abcdef",
 			    ['ab', 'abc', 'cd', 'def', 'abcd', 'ef'])); // true
-console.log(countConstruct2('skateboard',
+console.log(countConstruct3('skateboard',
 			 ['bo', 'rd', 'ate', 't', 'sk', 'boar'])) // false
-console.log(countConstruct2('enterapotentpot',
+console.log(countConstruct3('enterapotentpot',
 			 ['a', 'p', 'ent', 'enter', 'ot', 'o', 't'])) // true
-console.log(countConstruct2('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',
+console.log(countConstruct3('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',
 			 ['e', 'ee', 'eee', 'eeee', 'eeeeee', 'eeeeeee'])); // false
+
 
 
 

@@ -56,7 +56,7 @@ function allConstruct2(target, wordBank, memo={}) {
     return result;
 }
 
-
+/*
 console.log(allConstruct2("purple", ['purp', 'p', 'ur', 'le', 'purpl']));
 
 console.log(allConstruct2("abcdef",
@@ -67,5 +67,29 @@ console.log(allConstruct2('enterapotentpot',
  			 ['a', 'p', 'ent', 'enter', 'ot', 'o', 't'])) // true
 console.log(allConstruct2('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',
 			 ['e', 'ee', 'eee', 'eeee', 'eeeeee', 'eeeeeee'])); // false
+*/
+
+function allConstruct3(target, wordBank) {
+    let dp = Array(target.length + 1).fill(null).map(() => []);
+    dp[0] = [[]];
+
+    for(let i = 0; i < target.length; i++) {
+	for(let w of wordBank) {
+	    if(target.slice(i, i + w.length) === w) {
+		const newCombinations = dp[i].map(subArray => [...subArray, w]);
+		dp[i + w.length].push(...newCombinations);
+	    }
+	}
+    }
+
+    return dp[target.length];
+}
 
 
+console.log(allConstruct3("purple", ['purp', 'p', 'ur', 'le', 'purpl']));
+console.log(allConstruct3("abcdef",
+			    ['ab', 'abc', 'cd', 'def', 'abcd', 'ef'])); // 
+console.log(allConstruct3('enterapotentpot',
+			 ['a', 'p', 'ent', 'enter', 'ot', 'o', 't'])) // true
+//console.log(allConstruct3('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',
+//			 ['e', 'ee', 'eee', 'eeee', 'eeeeee', 'eeeeeee'])); // false
